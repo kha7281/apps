@@ -10,7 +10,7 @@ node {
     }
 
     stage('Build image') {
-       app = docker.build("${env.IMAGE_REPO}")
+       app = docker.build("kha7281/apps")
     }
 
     stage('Push image') {
@@ -33,7 +33,7 @@ node {
                 sh "git checkout ${env.GIT_REPO_BRANCH}"
                 sh '''#!/bin/bash
                     ls -lth
-                    yq eval '.image.repository = env(IMAGE_REPO)' -i values.yaml
+                    yq eval '.image.repository = kha7281/apps' -i values.yaml
                     yq eval '.image.tag = env(BUILD_NUMBER)' -i values.yaml
                     cat values.yaml
                     pwd

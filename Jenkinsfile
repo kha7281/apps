@@ -30,6 +30,7 @@ node {
         sh 'mv yq_linux_amd64 /usr/bin/yq'
         dir("helm-charts") {
             sh "git checkout master"
+            sh "git config --global user.email kha@ezesoft.com"
              sh '''#!/bin/bash
                     ls -lth
                     yq eval '.image.repository = kha7281/apps' -i values.yaml

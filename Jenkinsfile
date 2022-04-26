@@ -29,7 +29,7 @@ node {
         sh 'tar xvf yq_linux_amd64.tar.gz'
         sh 'mv yq_linux_amd64 /usr/bin/yq'
         dir("helm-charts") {
-            sh "git checkout ${env.GIT_REPO_BRANCH}"
+            sh "git checkout master"
              sh '''#!/bin/bash
                     ls -lth
                     yq eval '.image.repository = kha7281/apps' -i values.yaml

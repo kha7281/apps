@@ -35,9 +35,9 @@ node {
             dir("sre") {
                 sh '''#!/bin/bash
                     ls -lth
-                    yq eval '.image.repository = kha7281/apps' -i values.yaml
-                    yq eval '.image.tag = env(BUILD_NUMBER)' -i values.yaml
-                    cat values.yaml
+                    yq eval '.image.repository = kha7281/apps' -i ./values.yaml
+                    yq eval '.image.tag = env(BUILD_NUMBER)' -i ./values.yaml
+                    cat ./values.yaml
                     pwd
                     git add values.yaml
                     git commit -m 'Updated helm charts'

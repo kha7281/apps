@@ -35,13 +35,13 @@ node {
             dir("sre") {
                 sh '''#!/bin/bash
                     ls -lth
-                    yq eval '.image.repository = kha7281/apps' -i ./values.yaml
-                    yq eval '.image.tag = env(BUILD_NUMBER)' -i ./values.yaml
-                    cat ./values.yaml
+                    yq eval '.image.repository = kha7281/apps' -i /var/jenkins_home/workspace/jenkins-argocd/helm-charts/sre/values.yaml
+                    yq eval '.image.tag = env(BUILD_NUMBER)' -i /var/jenkins_home/workspace/jenkins-argocd/helm-charts/sre/values.yaml
+                    cat /var/jenkins_home/workspace/jenkins-argocd/helm-charts/sre/values.yaml
                     pwd
                     git add values.yaml
                     git commit -m 'Updated helm charts'
-                    git push https://$GIT_CREDS_USR:$GIT_CREDS_PSW@env(HELM_GIT_REPO_URL)
+                    git push origin master
                 '''
             }
         }

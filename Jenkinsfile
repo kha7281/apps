@@ -25,13 +25,12 @@ node {
             HELM_GIT_REPO_URL = 'github.com/kha7281/helm-charts.git'
             GIT_REPO_BRANCH = 'master'
         }
-        steps {
-            sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
-            sh 'tar xvf yq_linux_amd64.tar.gz'
-            sh 'mv yq_linux_amd64 /usr/bin/yq'
-            dir("helm-charts") {
-                sh "git checkout ${env.GIT_REPO_BRANCH}"
-                sh '''#!/bin/bash
+        sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
+        sh 'tar xvf yq_linux_amd64.tar.gz'
+        sh 'mv yq_linux_amd64 /usr/bin/yq'
+        dir("helm-charts") {
+            sh "git checkout ${env.GIT_REPO_BRANCH}"
+             sh '''#!/bin/bash
                     ls -lth
                     yq eval '.image.repository = kha7281/apps' -i values.yaml
                     yq eval '.image.tag = env(BUILD_NUMBER)' -i values.yaml
@@ -40,8 +39,7 @@ node {
                     git add values.yaml
                     git commit -m 'Updated helm charts'
                     git push https://$GIT_CREDS_USR:$GIT_CREDS_PSW@env(HELM_GIT_REPO_URL)
-                '''
-            }
+            '''
         }
     }
 }

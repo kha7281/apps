@@ -1,0 +1,16 @@
+{
+    "name": "app",
+    "version": "1.0.0",
+    "description": "Jenkins-ArgoCD Nodejs app",
+    "author": "",
+    "repository": "https://github.com/kha7281/apps.git",
+    "license": "",
+    "main": "server.js",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4"
+    },
+    "scripts": {
+        "start": "node server.js"
+    }
+}

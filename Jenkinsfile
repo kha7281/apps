@@ -30,8 +30,10 @@ node {
         sh 'mv yq_linux_amd64 /usr/bin/yq'
         dir("helm-charts") {
             sh "git checkout master"
+            sh "git pull"
             sh "git config --global user.email kha@ezesoft.com"
-             sh '''#!/bin/bash
+            dir("sre") {
+                sh '''#!/bin/bash
                     ls -lth
                     yq eval '.image.repository = kha7281/apps' -i values.yaml
                     yq eval '.image.tag = env(BUILD_NUMBER)' -i values.yaml
@@ -40,7 +42,8 @@ node {
                     git add values.yaml
                     git commit -m 'Updated helm charts'
                     git push https://$GIT_CREDS_USR:$GIT_CREDS_PSW@env(HELM_GIT_REPO_URL)
-            '''
+                '''
+            }
         }
     }
 }

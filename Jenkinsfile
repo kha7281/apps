@@ -15,7 +15,7 @@ pipeline {
         stage('Build image') { 
             steps { 
                 script{
-                 app = docker.build("kha7281/appss")
+                 app = docker.build("kha7281/apps")
                 }
             }
         }

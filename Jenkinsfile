@@ -55,6 +55,7 @@ pipeline {
                 withCredentials([
                     gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')
                 ]) {
+                    sh "git push --set-upstream origin master"
                     sh "git push"
                 }
             }

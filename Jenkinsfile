@@ -50,6 +50,7 @@ pipeline {
                     cat values.yaml
                     pwd
                     git add values.yaml
+                    git commit -m "Updated helm charts"
                     '''
                 }
                 withCredentials([

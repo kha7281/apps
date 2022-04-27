@@ -45,9 +45,8 @@ pipeline {
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
                 dir("sre") {
                     sh '''#!/bin/bash
-                    ls -lth
-                    yq eval '.image.repository = kha7281/apps' -i values.yaml
-                    yq eval '.image.tag = env(BUILD_NUMBER)' -i values.yaml
+                    yq  -i eval '.image.repository = "docker.io/kha7281/apps"' values.yaml
+                    yq  -i eval '.image.tag = env(BUILD_NUMBER)' values.yaml
                     cat values.yaml
                     pwd
                     git add values.yaml

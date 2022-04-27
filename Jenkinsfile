@@ -1,4 +1,4 @@
-node {
+pipeline {
 
     environment {
         IMAGE_REPO = "kha7281/apps"

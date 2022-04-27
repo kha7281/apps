@@ -50,11 +50,16 @@ pipeline {
                     cat values.yaml
                     pwd
                     git add values.yaml
-                    git commit -m 'Updated helm charts'
-                    git push origin master
                     '''
                 }
             }
+            steps {
+                withCredentials([
+                    gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')
+                ]) {
+                    sh "git push"
+                }
+            }   
         }
     }
 }

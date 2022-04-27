@@ -43,6 +43,18 @@ pipeline {
                 sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
+                dir("sre") {
+                    sh '''#!/bin/bash
+                    ls -lth
+                    yq eval '.image.repository = kha7281/apps' -i values.yaml
+                    yq eval '.image.tag = env(BUILD_NUMBER)' -i values.yaml
+                    cat values.yaml
+                    pwd
+                    git add values.yaml
+                    git commit -m 'Updated helm charts'
+                    git push origin master
+                    '''
+                }
             }
         }
     }

@@ -7,21 +7,20 @@ pipeline {
          stage('Clone repository') { 
             steps { 
                 script{
-                checkout scm
+                    checkout scm
                 }
             }
         }
-
         stage('Build image') { 
             steps { 
                 script{
-                 app = docker.build("kha7281/apps")
+                    app = docker.build("kha7281/apps")
                 }
             }
         }
         stage('Test'){
             steps {
-                 echo 'Empty'
+                echo 'Empty'
             }
         }
         stage('Push image') {
@@ -32,6 +31,13 @@ pipeline {
                         app.push("latest")
                     }
                 }
+            }
+        }
+        stage('Checkout external proj') {
+            steps {
+                git branch: 'master',
+                    credentialsId: 'github',
+                    url: 'https://github.com/kha7281/helm-charts.git'
             }
         }
     }

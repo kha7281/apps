@@ -4,7 +4,7 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-         stage('Clone repository') { 
+         stage('Check out apps repository') { 
             steps { 
                 script{
                     checkout scm
@@ -33,11 +33,16 @@ pipeline {
                 }
             }
         }
-        stage('Checkout external proj') {
+        stage('Check out helm-charts repository, update values and check in') {
             steps {
                 git branch: 'master',
                     credentialsId: 'github',
                     url: 'https://github.com/kha7281/helm-charts.git'
+
+                sh "ls -lat"
+                sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
+                sh 'tar xvf yq_linux_amd64.tar.gz'
+                sh 'mv yq_linux_amd64 /usr/bin/yq'
             }
         }
     }

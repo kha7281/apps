@@ -37,13 +37,13 @@ pipeline {
             steps {
                 git branch: 'master',
                     credentialsId: 'github',
-                    url: 'https://github.com/kha7281/helm-charts.git'
+                    url: 'https://github.com/kha7281/apps.git'
 
-                sh "ls -lat sre"
+                sh "ls -lat argocd/helm-charts"
                 sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
-                dir("sre") {
+                dir("argocd/helm-charts") {
                     sh '''#!/bin/bash
                     yq  -i eval '.image.repository = "docker.io/kha7281/apps"' values.yaml
                     yq  -i eval '.image.tag = env(BUILD_NUMBER)' values.yaml

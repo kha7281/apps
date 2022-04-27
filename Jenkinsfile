@@ -39,7 +39,7 @@ pipeline {
                     credentialsId: 'github',
                     url: 'https://github.com/kha7281/helm-charts.git'
 
-                sh "ls -lat"
+                sh "ls -lat sre"
                 sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'

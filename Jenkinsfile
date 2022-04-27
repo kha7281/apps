@@ -52,14 +52,12 @@ pipeline {
                     git add values.yaml
                     '''
                 }
-            }
-            steps {
                 withCredentials([
                     gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')
                 ]) {
                     sh "git push"
                 }
-            }   
+            }
         }
     }
 }

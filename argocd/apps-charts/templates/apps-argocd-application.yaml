@@ -19,9 +19,9 @@ spec:
     namespace: sre
   source:
     chart: apps
-    repoURL: https://github.com/kha7281/helm-charts/
+    repoURL: https://github.com/kha7281/apps.git
     targetRevision: {{ .Values.apps.targetRevision }}
-    path: sub-charts/
+    path: argocd/apps-charts/
     helm:
       releaseName: apps
       values: |

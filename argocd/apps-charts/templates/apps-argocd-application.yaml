@@ -1,0 +1,30 @@
+{{- if .Values.apps.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-helm-charts-apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: sre
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+  destination:
+    name: in-cluster
+    namespace: sre
+  source:
+    chart: apps
+    repoURL: https://github.com/kha7281/helm-charts/
+    targetRevision: {{ .Values.apps.targetRevision }}
+    path: sub-charts/
+    helm:
+      releaseName: apps
+      values: |
+        apps:
+          development: false
+{{- end }}

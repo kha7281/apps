@@ -45,8 +45,8 @@ pipeline {
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
                 dir("argocd/charts/apps") {
                     sh '''#!/bin/bash
-                    yq  -i eval '.Chart.version = 0.1.env(BUILD_NUMBER)' Chart.yaml
-                    yq  -i eval '.Chart.appVersion = env(BUILD_NUMBER)' Chart.yaml
+                    yq  -i eval '.version = 0.1.env(BUILD_NUMBER)' Chart.yaml
+                    yq  -i eval '.appVersion = env(BUILD_NUMBER)' Chart.yaml
                     cat Chart.yaml
                     pwd
                     git add Chart.yaml

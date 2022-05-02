@@ -70,6 +70,15 @@ pipeline {
 
                     """
                 }
+                withCredentials([[
+                    $class: 'UsernamePasswordMultiBinding', credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'
+                ]]) {
+                    sh """
+                    echo uname=$USERNAME
+                    cr upload --owner $USERNAME --git-repo helm-charts --package-path .deploy --token $PASSWORD
+                    """
+                }
+
                 withCredentials([
                     gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')
                 ]) {

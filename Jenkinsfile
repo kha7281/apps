@@ -44,7 +44,7 @@ pipeline {
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
                 sh 'prefix="0.1."'
-                sh 'eval "build = env(BUILD_NUMBER)"; export build'
+                sh 'eval "build = ${env.BUILD_NUMBER}"; export build'
                 sh 'export nextVersion="${prefix}${build}"'
                 dir("argocd/charts/apps") {
                     sh '''#!/bin/bash

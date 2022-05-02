@@ -91,9 +91,10 @@ pipeline {
                     credentialsId: 'github',
                     url: 'https://github.com/kha7281/helm-charts.git'
                 sh """
-                cr index -i ./index.yaml -p ../apps/argocd/charts/.deploy --owner kha7281 --git-repo helm-charts
+                cr index -i index.yaml -p ../apps/argocd/charts/.deploy --owner kha7281 --git-repo helm-charts
                 git add index.yaml
                 git commit -m "Updated index.yaml"
+                cat index.yaml
                 """
                 withCredentials([
                     gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')

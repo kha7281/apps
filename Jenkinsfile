@@ -45,19 +45,20 @@ pipeline {
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
                 
-                sh """ 
-                    export nextVersion="0.1."${env.BUILD_NUMBER}
-                """
+                //sh """ 
+                //    export nextVersion="0.1."${env.BUILD_NUMBER}
+                //"""
                 
                 dir("argocd/charts/apps") {
-                    sh '''#!/bin/bash
-                    yq  -i eval '.version = env(nextVersion)' Chart.yaml
+                    sh """#!/bin/bash
+                    nextVersion="0.1."${env.BUILD_NUMBER}
+                    yq  -i eval '.version = $nextVersion' Chart.yaml
                     yq  -i eval '.appVersion = env(BUILD_NUMBER)' Chart.yaml
                     cat Chart.yaml
                     pwd
                     git add Chart.yaml
                     git commit -m "Updated helm charts version and app version"
-                    '''
+                    """
                 }
                 withCredentials([
                     gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')

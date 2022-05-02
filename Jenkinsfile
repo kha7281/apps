@@ -43,12 +43,11 @@ pipeline {
                 sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
+                sh 'prefix="0.1."'
+                sh 'eval "build = env(BUILD_NUMBER)"; export build'
+                sh 'export nextVersion="${prefix}${build}"'
                 dir("argocd/charts/apps") {
                     sh '''#!/bin/bash
-                    prefix="0.1."
-                    eval 'build = env(BUILD_NUMBER)'; export build
-                    echo ${build}
-                    export nextVersion="${prefix}${build}"
                     yq  -i eval '.version = env(nextVersion)' Chart.yaml
                     yq  -i eval '.appVersion = env(BUILD_NUMBER)' Chart.yaml
                     cat Chart.yaml

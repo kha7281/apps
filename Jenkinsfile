@@ -46,7 +46,7 @@ pipeline {
                 dir("argocd/charts/apps") {
                     sh '''#!/bin/bash
                     prefix="0.1."
-                    build='env(BUILD_NUMBER)'
+                    eval 'build=env(BUILD_NUMBER)'
                     export nextVersion="${prefix}${build}"
                     yq  -i eval '.version = env(nextVersion)' Chart.yaml
                     yq  -i eval '.appVersion = env(BUILD_NUMBER)' Chart.yaml

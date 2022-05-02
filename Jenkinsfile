@@ -46,9 +46,8 @@ pipeline {
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
                 
                 sh """ 
-                    prefix="0.1."
                     build=${env.BUILD_NUMBER}
-                    export nextVersion=${prefix}${build}
+                    export nextVersion="0.1."${build}
                 """
                 
                 dir("argocd/charts/apps") {

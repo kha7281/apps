@@ -64,9 +64,9 @@ pipeline {
                     git commit -m "Updated helm charts version and app version"
                     """
                 }
-                dir("argocd/charts") {
+                dir("../") {
                     sh """#!/bin/bash
-                    helm package charts/apps --destination .deploy
+                    helm package apps --destination .deploy
 
                     """
                 }

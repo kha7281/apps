@@ -48,7 +48,7 @@ pipeline {
                     prefix="0.1."
                     build='env(BUILD_NUMBER)'
                     nextVersion="${prefix}${build}"
-                    yq  -i eval '.version = "${nextVersion}"' Chart.yaml
+                    yq  -i eval '.version = env(nextVersion)' Chart.yaml
                     yq  -i eval '.appVersion = env(BUILD_NUMBER)' Chart.yaml
                     cat Chart.yaml
                     pwd

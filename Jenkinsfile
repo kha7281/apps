@@ -75,6 +75,7 @@ pipeline {
                 ]]) {
                     sh """
                     echo uname=$USERNAME
+                    rm -rf ./argocd/charts/.deploy
                     cr upload --owner $USERNAME --git-repo helm-charts --package-path ./argocd/charts/.deploy --token $PASSWORD
                     """
                 }

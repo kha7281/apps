@@ -43,14 +43,14 @@ pipeline {
                 sh 'wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz'
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
-                dir("argocd/helm-charts") {
+                dir("argocd/charts/apps") {
                     sh '''#!/bin/bash
-                    yq  -i eval '.image.repository = "docker.io/kha7281/apps"' values.yaml
-                    yq  -i eval '.image.tag = env(BUILD_NUMBER)' values.yaml
-                    cat values.yaml
+                    yq  -i eval '.Chart.version = 0.1.env(BUILD_NUMBER)' Chart.yaml
+                    yq  -i eval '.Chart.appVersion = env(BUILD_NUMBER)' Chart.yaml
+                    cat Chart.yaml
                     pwd
-                    git add values.yaml
-                    git commit -m "Updated helm charts"
+                    git add Chart.yaml
+                    git commit -m "Updated helm charts version and app version"
                     '''
                 }
                 withCredentials([

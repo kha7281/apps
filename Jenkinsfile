@@ -33,6 +33,7 @@ pipeline {
                 }
             }
         }
+        //  https://stackoverflow.com/questions/56006353/using-jenkins-environment-variable-in-pipeline-sh-script
         stage('Check out helm-charts repository, update values and check in') {
             steps {
                 git branch: 'master',
@@ -44,8 +45,10 @@ pipeline {
                 sh 'tar xvf yq_linux_amd64.tar.gz'
                 sh 'mv yq_linux_amd64 /usr/bin/yq'
                 sh 'prefix="0.1."'
-                sh 'build = "${env.BUILD_NUMBER}"'
-                sh 'export build'
+                sh """ 
+                    build=${env.BUILD_NUMBER}
+                    export build
+                """
                 sh 'export nextVersion="${prefix}${build}"'
                 dir("argocd/charts/apps") {
                     sh '''#!/bin/bash

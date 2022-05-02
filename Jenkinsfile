@@ -85,6 +85,13 @@ pipeline {
                     sh "git push --set-upstream origin master"
                     sh "git push"
                 }
+
+                git branch: 'gh-pages',
+                    credentialsId: 'github',
+                    url: 'https://github.com/kha7281/helm-charts.git'
+                sh """
+                cr index -i ./index.yaml -p ../apps/argocd/charts/.deploy --owner kha7281 --git-repo helm-charts
+                """
             }
         }
     }

@@ -52,7 +52,7 @@ pipeline {
                 dir("argocd/charts/apps") {
                     sh """#!/bin/bash
                     nextVersion="0.1."${env.BUILD_NUMBER}
-                    yq  -i eval '.version = $nextVersion' Chart.yaml
+                    yq  -i eval '.version = ${env.nextVersion}' Chart.yaml
                     yq  -i eval '.appVersion = env(BUILD_NUMBER)' Chart.yaml
                     cat Chart.yaml
                     pwd

@@ -11,16 +11,7 @@ spec:
   source:
     path: argocd/apps-subchart/
     repoURL: https://github.com/kha7281/apps
-    targetRevision: master
-  sync:
-    comparedTo:
-      destination:
-        namespace: test
-        server: https://kubernetes.default.svc
-      source:
-        path: argocd/apps-subchart/
-        repoURL: https://github.com/kha7281/apps
-        targetRevision: master
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

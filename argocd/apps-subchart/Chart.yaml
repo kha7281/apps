@@ -1,7 +1,7 @@
 apiVersion: v2
 name: apps-subchart
 type: application
-version: 0.1.947
+version: 0.1.948
 appVersion: "946"
 dependencies:
   - name: apps

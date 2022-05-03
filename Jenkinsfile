@@ -120,6 +120,7 @@ pipeline {
                         export nextVersion="0.1."${env.BUILD_NUMBER}
                         yq  -i eval '.version = env(nextVersion)' Chart.yaml
                         yq  -i eval '.dependencies.name.version = env(nextVersion)' Chart.yaml
+                        yq -i eval '.dependencies[] |= select(.name == "apps").version = env(nextVersion)' Chart.yaml
                         cat Chart.yaml
                         pwd
                         git add Chart.yaml

@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-subchart
+  namespace: argocd
+spec:
+  destination:
+    namespace: sre
+    server: https://kubernetes.default.svc
+  project: sre
+  source:
+    path: argocd/apps-subchart/
+    repoURL: https://github.com/kha7281/apps
+    targetRevision: master
+  sync:
+    comparedTo:
+      destination:
+        namespace: test
+        server: https://kubernetes.default.svc
+      source:
+        path: argocd/apps-subchart/
+        repoURL: https://github.com/kha7281/apps
+        targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

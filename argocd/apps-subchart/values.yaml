@@ -1,0 +1,4 @@
+---
+apps:
+  image:
+    name: docker.io/kha7281/apps

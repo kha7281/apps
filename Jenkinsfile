@@ -107,5 +107,32 @@ pipeline {
                 }
             }
         }
+        // Deploy to argocd
+        stage('Deploy') {
+            steps {
+                dir("Deploy") {
+                    git branch: 'master',
+                        credentialsId: 'github',
+                        url: 'https://github.com/kha7281/apps.git'
+
+                    dir("argocd/apps-subchart") {
+                        sh """#!/bin/bash
+                        export nextVersion="0.1."${env.BUILD_NUMBER}
+                        yq  -i eval '.version = env(nextVersion)' Chart.yaml
+                        cat Chart.yaml
+                        pwd
+                        git add Chart.yaml
+                        git commit -m "Updated helm charts version and app version"
+                        """
+                        withCredentials([
+                        gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')
+                        ]) {
+                            sh "git push --set-upstream origin master"
+                            sh "git push"
+                        }
+                    }
+                }
+            }
+        }
     }
 }

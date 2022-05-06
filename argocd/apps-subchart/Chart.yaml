@@ -1,9 +1,9 @@
 apiVersion: v2
 name: apps-subchart
 type: application
-version: 0.1.950
+version: 0.1.951
 appVersion: "946"
 dependencies:
   - name: apps
-    version: 0.1.950
+    version: 0.1.951
     repository: https://kha7281.github.io/helm-charts

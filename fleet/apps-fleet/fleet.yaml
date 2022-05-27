@@ -17,7 +17,7 @@ helm:
 
   # Used if repo is set to look up the version of the chart
   # Update for each apps chart build
-  version: "0.1.951"
+  version: "0.1.950"
 
   # Force recreate resource that can not be updated
   force: false

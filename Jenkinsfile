@@ -118,7 +118,7 @@ pipeline {
                     dir("fleet/apps-fleet") {
                         sh """#!/bin/bash
                         export nextVersion="0.1."${env.BUILD_NUMBER}
-                        yq  -i eval '.version = env(nextVersion)' fleet.yaml
+                        yq  -i eval '.helm.version = env(nextVersion)' fleet.yaml
                         cat fleet.yaml
                         pwd
                         git add fleet.yaml

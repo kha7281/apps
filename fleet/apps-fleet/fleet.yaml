@@ -27,4 +27,5 @@ helm:
   timeoutSeconds: 0
 
   # Custom values that will be passed as values.yaml to the installation
-  replicaCount: 2
+  values:
+    replicaCount: 2

@@ -53,7 +53,7 @@ pipeline {
                 sh 'tar xvf helm-v3.8.2-linux-amd64.tar.gz'
                 sh 'mv linux-amd64/helm /usr/bin/helm'
 
-                dir("fleet/charts/apps") {
+                dir("argocd/charts/apps") {
                     sh """#!/bin/bash
                     export nextVersion="0.1."${env.BUILD_NUMBER}
                     yq  -i eval '.version = env(nextVersion)' Chart.yaml
@@ -64,7 +64,7 @@ pipeline {
                     git commit -m "Updated helm charts version and app version"
                     """
                 }
-                dir("fleet/charts") {
+                dir("argocd/charts") {
                     sh """#!/bin/bash
                     rm -rf .deploy
                     helm package apps --destination .deploy
@@ -76,7 +76,7 @@ pipeline {
                 ]]) {
                     sh """
                     echo uname=$USERNAME
-                    cr upload --owner $USERNAME --git-repo helm-charts --package-path ./fleet/charts/.deploy --token $PASSWORD
+                    cr upload --owner $USERNAME --git-repo helm-charts --package-path ./argocd/charts/.deploy --token $PASSWORD
                     """
                 }
 
@@ -93,7 +93,7 @@ pipeline {
                         url: 'https://github.com/kha7281/helm-charts.git'
 
                     sh """
-                    cr index -i ./index.yaml -p ../fleet/charts/.deploy --owner kha7281 --git-repo helm-charts
+                    cr index -i ./index.yaml -p ../argocd/charts/.deploy --owner kha7281 --git-repo helm-charts
                     git add index.yaml
                     git commit -m "Updated index.yaml"
                     cat index.yaml
@@ -115,13 +115,15 @@ pipeline {
                         credentialsId: 'github',
                         url: 'https://github.com/kha7281/apps.git'
 
-                    dir("fleet/apps-fleet") {
+                    dir("argocd/apps-subchart") {
                         sh """#!/bin/bash
                         export nextVersion="0.1."${env.BUILD_NUMBER}
-                        yq  -i eval '.version = env(nextVersion)' fleet.yaml
-                        cat fleet.yaml
+                        yq  -i eval '.version = env(nextVersion)' Chart.yaml
+                        yq  -i eval '.dependencies.name.version = env(nextVersion)' Chart.yaml
+                        yq -i eval '.dependencies[] |= select(.name == "apps").version = env(nextVersion)' Chart.yaml
+                        cat Chart.yaml
                         pwd
-                        git add fleet.yaml
+                        git add Chart.yaml
                         git commit -m "Updated helm charts version and app version"
                         """
                         withCredentials([

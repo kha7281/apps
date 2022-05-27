@@ -1,0 +1,17 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: demo
+  namespace: fleet-local
+spec:
+  branch: master
+  paths:
+  - /fleet/apps-fleet
+  repo: https://github.com/kha7281/apps.git
+  targets:
+  - clusterSelector:
+      matchExpressions:
+      - key: provider.cattle.io
+        operator: NotIn
+        values:
+        - harvester

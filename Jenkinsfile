@@ -107,7 +107,7 @@ pipeline {
                 }
             }
         }
-        // Deploy to argocd
+        // Deploy to rancher fleet
         stage('Deploy') {
             steps {
                 dir("Deploy") {
@@ -115,7 +115,7 @@ pipeline {
                         credentialsId: 'github',
                         url: 'https://github.com/kha7281/apps.git'
 
-                    dir("deployment/fleet-app") {
+                    dir("deployment/fleet-app/castle") {
                         sh """#!/bin/bash
                         export nextVersion="0.1."${env.BUILD_NUMBER}
                         yq  -i eval '.helm.version = env(nextVersion)' fleet.yaml

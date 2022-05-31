@@ -13,7 +13,7 @@ helm:
   repo: "https://kha7281.github.io/helm-charts"
   # Used if repo is set to look up the version of the chart
   # Update for each apps chart build
-  version: "0.1.958"
+  version: "0.1.959"
   # Force recreate resource that can not be updated
   force: false
   # How long for helm to wait for the release to be active. If the value

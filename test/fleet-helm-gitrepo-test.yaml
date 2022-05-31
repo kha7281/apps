@@ -12,6 +12,6 @@ spec:
   - clusterSelector:
       matchExpressions:
       - key: provider.cattle.io
-        operator: NotIn
+        operator: In
         values:
-        - harvester
+        - demo

@@ -53,7 +53,7 @@ pipeline {
                 sh 'tar xvf helm-v3.8.2-linux-amd64.tar.gz'
                 sh 'mv linux-amd64/helm /usr/bin/helm'
 
-                dir("fleet/charts/apps") {
+                dir("deployment/charts/apps") {
                     sh """#!/bin/bash
                     export nextVersion="0.1."${env.BUILD_NUMBER}
                     yq  -i eval '.version = env(nextVersion)' Chart.yaml
@@ -64,7 +64,7 @@ pipeline {
                     git commit -m "Updated helm charts version and app version"
                     """
                 }
-                dir("fleet/charts") {
+                dir("deployment/charts") {
                     sh """#!/bin/bash
                     rm -rf .deploy
                     helm package apps --destination .deploy
@@ -76,7 +76,7 @@ pipeline {
                 ]]) {
                     sh """
                     echo uname=$USERNAME
-                    cr upload --owner $USERNAME --git-repo helm-charts --package-path ./fleet/charts/.deploy --token $PASSWORD
+                    cr upload --owner $USERNAME --git-repo helm-charts --package-path ./deployment/charts/.deploy --token $PASSWORD
                     """
                 }
 
@@ -93,7 +93,7 @@ pipeline {
                         url: 'https://github.com/kha7281/helm-charts.git'
 
                     sh """
-                    cr index -i ./index.yaml -p ../fleet/charts/.deploy --owner kha7281 --git-repo helm-charts
+                    cr index -i ./index.yaml -p ../deployment/charts/.deploy --owner kha7281 --git-repo helm-charts
                     git add index.yaml
                     git commit -m "Updated index.yaml"
                     cat index.yaml
@@ -115,7 +115,7 @@ pipeline {
                         credentialsId: 'github',
                         url: 'https://github.com/kha7281/apps.git'
 
-                    dir("fleet/apps-fleet") {
+                    dir("deployment/fleet-app") {
                         sh """#!/bin/bash
                         export nextVersion="0.1."${env.BUILD_NUMBER}
                         yq  -i eval '.helm.version = env(nextVersion)' fleet.yaml

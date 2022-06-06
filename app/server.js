@@ -3,7 +3,7 @@ const app = express()
 const port = 3000
 
 app.get('/', (req, res) => {
-    res.send('Demo-ing Jenkins-ArgoCD pipeline!')
+    res.send('Demo-ing Jenkins-Rancher Fleet CD pipeline!')
 })
 
 app.listen(port, () => {
